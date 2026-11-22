@@ -1,0 +1,6 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": ["Read", "Edit", "Write", "Bash(git *)", "Bash(gh *)", "Bash(npm *)"]
+  }
+}

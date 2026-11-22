@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this skill, its scripts or its edge-case catalog in your work, please cite it as below."
+title: "kitchen-pos-blueprint: build a restaurant POS and replicate it to other businesses, a Claude skill"
+type: software
+authors:
+  - family-names: Gargrish
+    given-names: Amber
+    website: "https://gargrish.com"
+repository-code: "https://github.com/ambergargrish-ca/kitchen-pos-blueprint"
+abstract: >-
+  A Claude skill for building a production-grade, multi-tenant restaurant POS (tabs,
+  kitchen display, online and QR ordering, payments, card terminals, offline mode,
+  back office) and replicating it to salons, clinics, gyms and shops by configuration.
+  Includes a 234-case edge-case catalog with a CI gate, a reference money core with
+  tests, a starter schema and region tax notes for New Zealand and Canada. Built and
+  proven on the Mainpoint platform (Platepoint, Orbyt).
+keywords:
+  - claude-skill
+  - point-of-sale
+  - restaurant-pos
+  - kitchen-display-system
+  - multi-tenant-saas
+  - payments
+  - edge-cases
+license: MIT
+version: 1.0.0
+date-released: "2026-11-22"

@@ -1,0 +1,37 @@
+{
+  "product": "salon",
+  "brand": {
+    "name": "Salonpoint",
+    "domain": "example.com/salon",
+    "tagline": "Every chair, booked.",
+    "colors": { "primary": "#1F2937", "accent": "#DB2777" }
+  },
+  "words": [
+    ["restaurant", "restaurants", "Restaurant", "Restaurants", "salon", "salons", "Salon", "Salons"],
+    ["dish", "dishes", "Dish", "Dishes", "service", "services", "Service", "Services"],
+    ["menu", "menus", "Menu", "Menus", "services", "services", "Services", "Services"],
+    ["guest", "guests", "Guest", "Guests", "client", "clients", "Client", "Clients"],
+    ["table", "tables", "Table", "Tables", "chair", "chairs", "Chair", "Chairs"]
+  ],
+  "protectedTokens": ["GST/HST no.", "GST + PST", "Stripe-Signature", "X-Twilio-Signature"],
+  "modules": ["website", "pos", "appointments", "loyalty", "giftcards", "marketing", "ai_phone", "backoffice", "pos_integration"],
+  "itemFields": {
+    "duration_min": { "required": true, "grid": 15 },
+    "buffer_min": { "required": false },
+    "online": { "required": false, "default": true },
+    "deposit_cents": { "required": false }
+  },
+  "rules": {
+    "selfCancelHoursBefore": 4,
+    "reminderFrom": "18:00 the day before",
+    "noDoubleBookingProvider": true,
+    "onlineNotes": true,
+    "ageCheck": false
+  },
+  "compliance": [
+    "Deposits and cancellation fees shown before booking",
+    "Marketing texts need opt-in (CASL / UEMA)"
+  ],
+  "demoTenant": "demo-salon",
+  "newEdgeCases": ["VRT-03", "VRT-04", "VRT-05", "VRT-11", "VRT-12"]
+}

@@ -1,0 +1,235 @@
+id,priority,area,title,test,status
+MON-01,P0,Money and pricing,Floating point totals,,todo
+MON-02,P0,Money and pricing,Client-sent prices,scripts/money.test.mjs,passing
+MON-03,P0,Money and pricing,Negative quantities or zero,scripts/money.test.mjs,passing
+MON-04,P0,Money and pricing,Duplicated option ids,scripts/money.test.mjs,passing
+MON-05,P1,Money and pricing,Single-choice group with nothing picked,scripts/money.test.mjs,passing
+MON-06,P0,Money and pricing,Percent promo above 100,scripts/money.test.mjs,passing
+MON-07,P0,Money and pricing,Stacked discounts,scripts/money.test.mjs,passing
+MON-08,P1,Money and pricing,Promo minimum spend,scripts/money.test.mjs,passing
+MON-09,P1,Money and pricing,Inactive or expired promo still on an open tab,,todo
+MON-10,P0,Money and pricing,Tax inclusive vs exclusive mixed up,scripts/money.test.mjs,passing
+MON-11,P0,Money and pricing,Rounding tax per line vs per bill,,todo
+MON-12,P1,Money and pricing,Half-cent rounding,scripts/money.test.mjs,passing
+MON-13,P0,Money and pricing,Discounts after tax,scripts/money.test.mjs,passing
+MON-14,P1,Money and pricing,Free items,,todo
+MON-15,P1,Money and pricing,Empty cart,scripts/money.test.mjs,passing
+MON-16,P1,Money and pricing,Oversized cart,scripts/money.test.mjs,passing
+MON-17,P1,Money and pricing,Kitchen notes,scripts/money.test.mjs,passing
+MON-18,P0,Money and pricing,Item deactivated mid-checkout,scripts/money.test.mjs,passing
+MON-19,P0,Money and pricing,Sold out between cart and pay,scripts/money.test.mjs,passing
+MON-20,P1,Money and pricing,Price change on an open tab,,todo
+MON-21,P1,Money and pricing,Channel pricing,,todo
+MON-22,P1,Money and pricing,Currency display,,todo
+MON-23,P2,Money and pricing,Marketing prices,,todo
+MON-24,P0,Money and pricing,Tip abuse online,scripts/money.test.mjs,passing
+MON-25,P1,Money and pricing,Tips switched off,scripts/money.test.mjs,passing
+MON-26,P1,Money and pricing,Small-bill tax rebates,scripts/money.test.mjs,passing
+MON-27,P1,Money and pricing,Combined tax rates,,todo
+MON-28,P1,Money and pricing,"Rates are defaults, not truth",,todo
+POS-01,P0,Tabs and the POS,Two tabs on one table,,todo
+POS-02,P0,Tabs and the POS,Two staff pay the same tab at once,,todo
+POS-03,P0,Tabs and the POS,Overpaying,scripts/money.test.mjs,passing
+POS-04,P0,Tabs and the POS,Closing a tab that is not fully paid,,todo
+POS-05,P0,Tabs and the POS,Adding items after someone started paying,,todo
+POS-06,P0,Tabs and the POS,Voiding an item already sent to the kitchen,,todo
+POS-07,P1,Tabs and the POS,Voiding the last item,,todo
+POS-08,P1,Tabs and the POS,Move tab to an occupied table,,todo
+POS-09,P1,Tabs and the POS,Merge tabs with different promos or loyalty members,,todo
+POS-10,P1,Tabs and the POS,Split by seat when items have no seat,,todo
+POS-11,P0,Tabs and the POS,Even split leaves a cent,scripts/money.test.mjs,passing
+POS-12,P1,Tabs and the POS,Split up to N ways,,todo
+POS-13,P1,Tabs and the POS,Counter sale paid before sending,,todo
+POS-14,P1,Tabs and the POS,Phone or web order paid at the counter,,todo
+POS-15,P0,Tabs and the POS,Surcharge line drifting,scripts/money.test.mjs,passing
+POS-16,P0,Tabs and the POS,Surcharging debit,scripts/money.test.mjs,passing
+POS-17,P1,Tabs and the POS,Manual discount by floor staff,,todo
+POS-18,P1,Tabs and the POS,"Print bill, then change",,todo
+POS-19,P1,Tabs and the POS,Open-price items,,todo
+POS-20,P1,Tabs and the POS,Business day past midnight,,todo
+POS-21,P1,Tabs and the POS,Z report run twice or mid-shift,,todo
+POS-22,P2,Tabs and the POS,Handheld screens,,todo
+OFF-01,P0,Offline mode,Internet drops mid-service,,todo
+OFF-02,P0,Offline mode,Replay runs twice,,todo
+OFF-03,P0,Offline mode,Replay out of order,,todo
+OFF-04,P0,Offline mode,Offline tab opens twice,,todo
+OFF-05,P0,Offline mode,Actions that cannot work offline,,todo
+OFF-06,P1,Offline mode,First request still running when offline starts,,todo
+OFF-07,P1,Offline mode,Tablet wiped or cache cleared while offline,,todo
+OFF-08,P1,Offline mode,App shell offline,,todo
+OFF-09,P1,Offline mode,Menu changed while a device was offline,,todo
+OFF-10,P1,Offline mode,Clock skew on the device,,todo
+KDS-01,P0,Kitchen display,Ticket never arrives,,todo
+KDS-02,P0,Kitchen display,Ticket sent twice,,todo
+KDS-03,P1,Kitchen display,Station routing,,todo
+KDS-04,P1,Kitchen display,Partial bump,,todo
+KDS-05,P1,Kitchen display,Bumped by mistake,,todo
+KDS-06,P1,Kitchen display,Voids and changes after sending,,todo
+KDS-07,P1,Kitchen display,Order-ahead tickets fire too early,,todo
+KDS-08,P1,Kitchen display,Kitchen overwhelmed,,todo
+KDS-09,P2,Kitchen display,Timers,,todo
+KDS-10,P1,Kitchen display,All-day counts,,todo
+KDS-11,P1,Kitchen display,Unpaid online orders reaching the kitchen,,todo
+KDS-12,P1,Kitchen display,Delivery app cancels after cooking started,,todo
+ORD-01,P0,Online ordering and guests,Ordering while closed,,todo
+ORD-02,P0,Online ordering and guests,Hours past midnight,scripts/money.test.mjs,passing
+ORD-03,P1,Online ordering and guests,DST change,,todo
+ORD-04,P1,Online ordering and guests,Order-ahead limits,,todo
+ORD-05,P0,Online ordering and guests,Abandoned checkout,,todo
+ORD-06,P0,Online ordering and guests,Payment arrives after the order was cancelled,,todo
+ORD-07,P1,Online ordering and guests,Retry payment,,todo
+ORD-08,P1,Online ordering and guests,Delivery outside the zone,,todo
+ORD-09,P1,Online ordering and guests,Minimum order,,todo
+ORD-10,P1,Online ordering and guests,Reorder from history,,todo
+ORD-11,P1,Online ordering and guests,Phone number formats,,todo
+ORD-12,P0,Online ordering and guests,Guest sign-in by code,,todo
+ORD-13,P1,Online ordering and guests,Order tracking link guessable,,todo
+ORD-14,P1,Online ordering and guests,Receipts,,todo
+ORD-15,P1,Online ordering and guests,Reviews and problem reports,,todo
+ORD-16,P2,Online ordering and guests,Allergens and spice,,todo
+QR-01,P0,QR table ordering,Guest changes the table in the request,,todo
+QR-02,P1,QR table ordering,Lost or photographed QR card,,todo
+QR-03,P0,QR table ordering,"Pay at the end, guest leaves",,todo
+QR-04,P0,QR table ordering,Online share double counted,,todo
+QR-05,P0,QR table ordering,Share paid after the tab closed,,todo
+QR-06,P0,QR table ordering,Share larger than what is left,,todo
+QR-07,P1,QR table ordering,Call staff spam,,todo
+QR-08,P1,QR table ordering,Guest Wi-Fi leaked,,todo
+QR-09,P1,QR table ordering,Who ordered what,,todo
+QR-10,P0,QR table ordering,Restricted items from the table,,todo
+PAY-01,P0,Payments,Trusting the redirect,,todo
+PAY-02,P0,Payments,Webhook replay,,todo
+PAY-03,P0,Payments,Unsigned or forged webhook,,todo
+PAY-04,P0,Payments,Amount mismatch,,todo
+PAY-05,P0,Payments,"Test keys in production, live keys in dev",,todo
+PAY-06,P0,Payments,Mocks in production,,todo
+PAY-07,P0,Payments,Test money spent live,,todo
+PAY-08,P1,Payments,Provider outage,,todo
+PAY-09,P1,Payments,Payouts per business,,todo
+PAY-10,P1,Payments,Negative balances,,todo
+PAY-11,P0,Payments,Card data in your system,,todo
+PAY-12,P1,Payments,Partial capture or tip adjust,,todo
+REF-01,P0,Refunds,Double refund,scripts/money.test.mjs,passing
+REF-02,P0,Refunds,Refund to the wrong method,,todo
+REF-03,P0,Refunds,Refunding a gift card purchase after the card was spent,,todo
+REF-04,P1,Refunds,Loyalty after refunds,,todo
+REF-05,P1,Refunds,Refunding a booking deposit used on a bill,,todo
+REF-06,P1,Refunds,Parallel refunds and the order total,,todo
+REF-07,P1,Refunds,Insurance payments,,todo
+REF-08,P1,Refunds,Refunds after the day closed,,todo
+TRM-01,P0,Card terminals,Busy terminal,,todo
+TRM-02,P0,Card terminals,Result recorded twice,,todo
+TRM-03,P0,Card terminals,Staff key the amount on a standalone terminal wrong,,todo
+TRM-04,P1,Card terminals,Cancel,,todo
+TRM-05,P1,Card terminals,Tip on the terminal,,todo
+TRM-06,P1,Card terminals,Connection lost after approval,,todo
+TRM-07,P1,Card terminals,Reader belongs to the business's own processor account,,todo
+GL-01,P0,Gift cards and loyalty,Codes leaked from the database,,todo
+GL-02,P0,Gift cards and loyalty,Balance race,,todo
+GL-03,P1,Gift cards and loyalty,Confusing characters,,todo
+GL-04,P0,Gift cards and loyalty,Expiry law,,todo
+GL-05,P1,Gift cards and loyalty,Amount limits,,todo
+GL-06,P0,Gift cards and loyalty,Spending points without owning the phone,,todo
+GL-07,P1,Gift cards and loyalty,Points on discounts,,todo
+GL-08,P1,Gift cards and loyalty,Points held at checkout,,todo
+GL-09,P1,Gift cards and loyalty,Referral abuse,,todo
+GL-10,P1,Gift cards and loyalty,Privacy removal,,todo
+BKG-01,P0,"Bookings, deposits and waitlist",Overbooking,,todo
+BKG-02,P1,"Bookings, deposits and waitlist",Slots near closing,,todo
+BKG-03,P1,"Bookings, deposits and waitlist",Deposit hold,,todo
+BKG-04,P0,"Bookings, deposits and waitlist",Deposit used twice,,todo
+BKG-05,P1,"Bookings, deposits and waitlist",Reminder sent twice,,todo
+BKG-06,P1,"Bookings, deposits and waitlist",Waitlist position,,todo
+DLV-01,P1,Delivery and dispatch,No driver free,,todo
+DLV-02,P1,Delivery and dispatch,Batching,,todo
+DLV-03,P0,Delivery and dispatch,Driver location privacy,,todo
+DLV-04,P1,Delivery and dispatch,Proof of delivery,,todo
+DLV-05,P1,Delivery and dispatch,"""On the way"" too early",,todo
+DLV-06,P1,Delivery and dispatch,Driver tips,,todo
+DLV-07,P1,Delivery and dispatch,No geocoder key,,todo
+DLV-08,P0,Delivery and dispatch,Courier webhook replay,,todo
+DLV-09,P1,Delivery and dispatch,Guest phone on dispatch screen,,todo
+INT-01,P0,Delivery apps and other POS systems,Delivery app webhook needs a fast answer,,todo
+INT-02,P1,Delivery apps and other POS systems,Prices in minor units with a decimal count,,todo
+INT-03,P1,Delivery apps and other POS systems,Items not on your menu,,todo
+INT-04,P1,Delivery apps and other POS systems,Status mapping,,todo
+INT-05,P0,Delivery apps and other POS systems,Pushing an online-paid order into the business's own POS,,todo
+INT-06,P1,Delivery apps and other POS systems,Their POS is down,,todo
+INT-07,P1,Delivery apps and other POS systems,Menu import duplicates,,todo
+INT-08,P0,Delivery apps and other POS systems,Their tokens at rest,,todo
+INT-09,P1,Delivery apps and other POS systems,API keys for third parties,,todo
+AI-01,P1,Phone AI agent,Sounds like a robot menu,,todo
+AI-02,P0,Phone AI agent,Agent invents prices or dishes,,todo
+AI-03,P1,Phone AI agent,Agent takes an order while closed,,todo
+AI-04,P1,Phone AI agent,Payment by phone,,todo
+AI-05,P1,Phone AI agent,Cost runaway,,todo
+AI-06,P1,Phone AI agent,Transcripts,,todo
+AI-07,P1,Phone AI agent,"""Ask your data"" assistants",,todo
+AI-08,P1,Phone AI agent,AI-written marketing,,todo
+MSG-01,P0,"Texts, email and marketing",Consent,,todo
+MSG-02,P0,"Texts, email and marketing",STOP replies,,todo
+MSG-03,P1,"Texts, email and marketing",Quiet hours,,todo
+MSG-04,P1,"Texts, email and marketing",Long texts cost more,,todo
+MSG-05,P0,"Texts, email and marketing",Platform number abused by a new signup,,todo
+MSG-06,P1,"Texts, email and marketing",Codes in logs,,todo
+MSG-07,P1,"Texts, email and marketing",No provider keys yet,,todo
+INV-01,P1,Inventory and purchasing,When to deduct stock,,todo
+INV-02,P1,Inventory and purchasing,Ingredient runs out,,todo
+INV-03,P1,Inventory and purchasing,Restock,,todo
+INV-04,P1,Inventory and purchasing,Negative stock,,todo
+INV-05,P1,Inventory and purchasing,Dish cost,,todo
+INV-06,P2,Inventory and purchasing,Purchase orders,,todo
+INV-07,P1,Inventory and purchasing,Barcodes,,todo
+STF-01,P0,"Staff, time and payroll",PIN brute force from many IPs,,todo
+STF-02,P0,"Staff, time and payroll",Role escalation through the API,,todo
+STF-03,P1,"Staff, time and payroll",Forgot to clock out,,todo
+STF-04,P1,"Staff, time and payroll",Overnight shifts,,todo
+STF-05,P1,"Staff, time and payroll",Double-booked staff,,todo
+STF-06,P1,"Staff, time and payroll",Overtime rules differ,,todo
+STF-07,P1,"Staff, time and payroll",Tip pooling,,todo
+STF-08,P1,"Staff, time and payroll",Schedule changes,,todo
+BOF-01,P0,"Back office, reports and accounting",Journal does not balance,scripts/money.test.mjs,passing
+BOF-02,P1,"Back office, reports and accounting",More refunds than sales on a method,scripts/money.test.mjs,passing
+BOF-03,P1,"Back office, reports and accounting",Same account on several lines,scripts/money.test.mjs,passing
+BOF-04,P1,"Back office, reports and accounting",Re-syncing a day,,todo
+BOF-05,P1,"Back office, reports and accounting",Accounting app blocks tax accounts,,todo
+BOF-06,P0,"Back office, reports and accounting",CSV formula injection,,todo
+BOF-07,P1,"Back office, reports and accounting",Sales tags,,todo
+BOF-08,P1,"Back office, reports and accounting",Time zones in reports,,todo
+TEN-01,P0,"Tenancy, platform and billing",Cross-tenant read,,todo
+TEN-02,P0,"Tenancy, platform and billing",Slug or custom domain collision,,todo
+TEN-03,P0,"Tenancy, platform and billing",Self-signup goes public unreviewed,,todo
+TEN-04,P1,"Tenancy, platform and billing",Suspended business,,todo
+TEN-05,P0,"Tenancy, platform and billing",Switched-off module still reachable,,todo
+TEN-06,P1,"Tenancy, platform and billing",Billing re-run,,todo
+TEN-07,P0,"Tenancy, platform and billing",Support access,,todo
+TEN-08,P1,"Tenancy, platform and billing",Demo tenant abuse,,todo
+VRT-01,P0,Replicating to other verticals,Word rewriting breaks code,,todo
+VRT-02,P0,Replicating to other verticals,A module that does not fit leaks in,,todo
+VRT-03,P0,Replicating to other verticals,Double-booking a provider,,todo
+VRT-04,P1,Replicating to other verticals,Service length grid,,todo
+VRT-05,P1,Replicating to other verticals,External calendars,,todo
+VRT-06,P0,Replicating to other verticals,Health data,,todo
+VRT-07,P0,Replicating to other verticals,Insurer direct billing,,todo
+VRT-08,P1,Replicating to other verticals,Memberships,,todo
+VRT-09,P0,Replicating to other verticals,Age-restricted products,,todo
+VRT-10,P1,Replicating to other verticals,Retail sold-out at zero,,todo
+VRT-11,P1,Replicating to other verticals,Self-cancel cut-off,,todo
+VRT-12,P1,Replicating to other verticals,Book by text,,todo
+REG-01,P0,Regions and law,Region not modelled,,todo
+REG-02,P1,Regions and law,Province sets tax and time zone,,todo
+REG-03,P1,Regions and law,Region wording,,todo
+REG-04,P1,Regions and law,Policies per country,,todo
+REG-05,P1,Regions and law,Platform invoice tax,,todo
+SEC-01,P0,Security and web,CSRF,,todo
+SEC-02,P0,Security and web,"XSS from dish names, notes and guest names",,todo
+SEC-03,P0,Security and web,Clickjacking the POS,,todo
+SEC-04,P0,Security and web,Rate limits,,todo
+SEC-05,P0,Security and web,Secrets in the repo,,todo
+SEC-06,P1,Security and web,Platform admin with password only,,todo
+SEC-07,P1,Security and web,Backups,,todo
+DEV-01,P1,Devices and apps,Kiosk left signed in as staff,,todo
+DEV-02,P1,Devices and apps,Kiosk card vs counter payment,,todo
+DEV-03,P1,Devices and apps,Stale cached code after deploy,,todo
+DEV-04,P2,Devices and apps,Native wrappers,,todo
+DEV-05,P1,Devices and apps,Printers,,todo
