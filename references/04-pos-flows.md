@@ -6,6 +6,9 @@
 - Counter sales are tabs without a table.
 - A tab holds lines; each line has seat (optional), sent_at, voided, unit price frozen at add time.
 - Actions: add, change qty, void (manager if sent), send round, discount (manager), attach loyalty member, apply gift card, take deposit off, print bill, move, merge, split, pay, cancel (empty or manager).
+- Manager approval on the server's tablet: a PIN authorises one request only (POS-23).
+- Courses: hold later courses until fired; paying sends anything held (POS-24). Moves and merges carry their tickets and are refused once a bill has a payment (POS-25).
+- Discounts can target one dish or one seat, shared by value (POS-26, `allocate()` in `scripts/money.js`). A manager can reopen a paid tab within a window (POS-28).
 
 ## Rounds
 
@@ -24,7 +27,9 @@
 | Insurance | Clinic verticals; not refundable from the bill |
 | Other | Vouchers, house accounts; label required |
 
-Every payment goes through the optimistic lock on `paid_cents`. Close when covered.
+Every payment goes through the optimistic lock on `paid_cents` and records what it covered (a seat, a share or dishes, POS-27). Take cash first and send only the remainder to the terminal. Close when covered.
+
+House accounts charge up to a limit in one statement with a ledger row and monthly statements (POS-31). Catering orders carry a deposit and reach the kitchen hours before the event (POS-32).
 
 ## Offline mode
 

@@ -233,3 +233,42 @@ DEV-02,P1,Devices and apps,Kiosk card vs counter payment,,todo
 DEV-03,P1,Devices and apps,Stale cached code after deploy,,todo
 DEV-04,P2,Devices and apps,Native wrappers,,todo
 DEV-05,P1,Devices and apps,Printers,,todo
+POS-23,P0,Tabs and the POS,Manager approval on a server's tablet,,todo
+POS-24,P1,Tabs and the POS,Courses fired too early or never,,todo
+POS-25,P1,Tabs and the POS,Moving or merging dishes between tabs,,todo
+POS-26,P1,Tabs and the POS,Discounts on single dishes or one seat,scripts/money.test.mjs,passing
+POS-27,P1,Tabs and the POS,A split payment that forgets what it paid for,,todo
+POS-28,P1,Tabs and the POS,Reopening a paid tab,,todo
+POS-29,P1,Tabs and the POS,Charging an amount without items,,todo
+POS-30,P1,Tabs and the POS,Guest-facing screens show too much,,todo
+POS-31,P0,Tabs and the POS,House account limit passed by two tablets,,todo
+POS-32,P1,Tabs and the POS,Catering orders cooked at the wrong time,,todo
+KDS-13,P2,Kitchen display,Ready-time estimates that ignore the room,,todo
+ORD-17,P0,Online ordering and guests,Blocked guests still ordering,,todo
+ORD-18,P0,Online ordering and guests,Card testing through checkout,,todo
+ORD-19,P1,Online ordering and guests,Fake big orders,,todo
+ORD-20,P1,Online ordering and guests,Pay at the counter by phone abused,,todo
+ORD-21,P1,Online ordering and guests,Pickups nobody collects,,todo
+PAY-13,P0,Payments,Webhook marked as seen before the work succeeded,,todo
+PAY-14,P0,Payments,Card hold on an order-ahead,,todo
+PAY-15,P0,Payments,Card disputes noticed too late,,todo
+PAY-16,P1,Payments,Restricted keys refused,,todo
+PAY-17,P0,Payments,Connected account created wrong,,todo
+PAY-18,P1,Payments,Refund asks for money that was never taken,,todo
+REF-09,P0,Refunds,Guests cancelling their own order,,todo
+REF-10,P1,Refunds,A dish on a paid online order is out of stock,scripts/money.test.mjs,passing
+TRM-08,P1,Card terminals,"Terminals that answer ""sent"", not ""paid""",,todo
+TRM-09,P1,Card terminals,Amounts keyed into a separate card machine,,todo
+BKG-07,P2,"Bookings, deposits and waitlist",Wait quotes that promise a booked table,,todo
+DLV-10,P0,Delivery and dispatch,Delivery sold with nobody to deliver it,,todo
+DLV-11,P1,Delivery and dispatch,Courier delivery fee shown is not the fee charged,,todo
+DLV-12,P1,Delivery and dispatch,Courier tips,,todo
+MSG-08,P1,"Texts, email and marketing",Automatic texts sent twice or without consent,,todo
+STF-09,P1,"Staff, time and payroll",Tip rules other than a plain pool,scripts/money.test.mjs,passing
+TEN-09,P0,"Tenancy, platform and billing",Self-serve custom domains,,todo
+TEN-10,P1,"Tenancy, platform and billing",Commission collected twice or never,,todo
+TEN-11,P1,"Tenancy, platform and billing",Bank debit for platform invoices,,todo
+TEN-12,P1,"Tenancy, platform and billing",Query parameter limits,,todo
+REG-06,P1,Regions and law,Surcharge law changes by region and date,,todo
+DEV-06,P1,Devices and apps,Cloud printer loses a job mid-print,,todo
+DEV-07,P1,Devices and apps,Cash drawer opens at the wrong time,,todo

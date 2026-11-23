@@ -57,7 +57,7 @@ A POS that stops when Wi-Fi drops is not a POS. Queue changes locally with idemp
 Sales with tags, Z report, inventory with recipes, purchasing, timesheets, tips, payroll export, accounting journal (Xero/QuickBooks), audit log, insights. Read `references/03-money.md`, "Daily journal".
 
 ### 9. Harden against the edge cases
-Work through `references/edge-cases.md`. It is the core of this skill: 234 cases in 23 areas, each with what goes wrong and the rule that prevents it. Turn each into a test using `templates/edge-case-matrix.csv`. A release is not ready while any P0 row lacks a passing test.
+Work through `references/edge-cases.md`. It is the core of this skill: 273 cases in 23 areas, each with what goes wrong and the rule that prevents it. Turn each into a test using `templates/edge-case-matrix.csv`. A release is not ready while any P0 row lacks a passing test.
 
 ### 10. Go live
 Run `templates/go-live-checklist.md`. Security review, live keys swapped deliberately, backups tested, provider certifications, privacy policy, support access rules.

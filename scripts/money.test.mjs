@@ -1,7 +1,7 @@
 // node --test scripts/money.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { priceCart, totals, surchargeCents, checkTip, splitEven, applyPayment, canRefund, balanceJournal, isOpenAt } from './money.js';
+import { priceCart, totals, surchargeCents, checkTip, splitEven, applyPayment, canRefund, balanceJournal, isOpenAt, allocate, lineRefundCents, splitTips } from './money.js';
 
 const menu = new Map([
   ['curry', { id: 'curry', name: 'Butter chicken', active: true, price_cents: 2400, modifiers: [
@@ -121,4 +121,29 @@ test('ORD-02 hours past midnight belong to the day they opened', () => {
   assert.equal(isOpenAt(hours, 6, 60), true); // Saturday 01:00
   assert.equal(isOpenAt(hours, 6, 130), false); // Saturday 02:10
   assert.equal(isOpenAt(hours, 5, 600), false);
+});
+
+test('POS-26 item discounts shared by value, last line takes the rounding, never above a line', () => {
+  assert.deepEqual(allocate(1000, [1000, 2000, 3000]), [167, 333, 500]);
+  assert.equal(allocate(999, [333, 333, 334]).reduce((a, v) => a + v, 0), 999);
+  assert.deepEqual(allocate(5000, [1000, 2000]), [1000, 2000]); // capped at the lines
+  assert.deepEqual(allocate(500, [0, 0]), [0, 0]);
+  assert.throws(() => allocate(-1, [100]));
+});
+
+test('REF-10 a dish refund is its share of what was charged, tip left out, capped at paid', () => {
+  // Two dishes 2000 + 1000, charged 3690 including 13% tax and a 300 tip.
+  assert.equal(lineRefundCents(1000, 3000, 3690, 300), 1130);
+  assert.equal(lineRefundCents(2000, 3000, 3690, 300), 2260);
+  assert.equal(lineRefundCents(3000, 3000, 3690, 300, 1000), 1000);
+  assert.equal(lineRefundCents(0, 3000, 3690), 0);
+});
+
+test('STF-09 tip shares are whole cents and always add up to the pot', () => {
+  const s = splitTips(10000, { ana: 6, ben: 3, cai: 3, dee: 0 });
+  assert.deepEqual(s, { ana: 5000, ben: 2500, cai: 2500, dee: 0 });
+  const r = splitTips(1000, { a: 1, b: 1, c: 1.5 });
+  assert.equal(r.a + r.b + r.c, 1000);
+  assert.equal(r.c, 430); // the longest shift takes the leftover cents
+  assert.deepEqual(splitTips(500, { a: 0 }), { a: 0 });
 });

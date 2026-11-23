@@ -101,6 +101,50 @@ export function splitEven(dueCents, ways) {
 }
 
 /**
+ * Share an amount across lines by value (an item discount over chosen dishes, a bill discount over seats).
+ * Each share is rounded; the last line takes what is left, so the shares always sum to the amount.
+ * No share is larger than its own line. weights: line values in cents.
+ */
+export function allocate(amountCents, weights) {
+  if (!Number.isInteger(amountCents) || amountCents < 0) throw bad('Amount must be whole cents.', 'bad_amount');
+  const gross = weights.reduce((a, w) => a + w, 0);
+  if (!weights.length || gross <= 0) return weights.map(() => 0);
+  const amount = Math.min(amountCents, gross);
+  let left = amount;
+  return weights.map((w, i) => {
+    const v = i === weights.length - 1 ? left : Math.min(w, Math.round((amount * w) / gross));
+    left -= v;
+    return v;
+  });
+}
+
+/**
+ * What one dish cost the guest, for a dish-level refund (out of stock, a wrong dish): its share of what was
+ * actually charged (tax, delivery and discounts spread by value), the tip left out, never more than was paid.
+ */
+export function lineRefundCents(lineNetCents, allLinesNetCents, chargedCents, tipCents = 0, paidCents = chargedCents) {
+  if (allLinesNetCents <= 0 || lineNetCents <= 0) return 0;
+  const share = Math.round((lineNetCents * Math.max(0, chargedCents - tipCents)) / allLinesNetCents);
+  return Math.max(0, Math.min(paidCents, share));
+}
+
+/**
+ * Split a tip pot by score (hours worked, or hours times a role weight). Whole cents; leftover cents go to
+ * whoever has the highest score, so the shares always add up to the pot. scores: { personId: number }.
+ */
+export function splitTips(potCents, scores) {
+  const ids = Object.keys(scores).filter((k) => scores[k] > 0);
+  const out = Object.fromEntries(Object.keys(scores).map((k) => [k, 0]));
+  const total = ids.reduce((a, k) => a + scores[k], 0);
+  if (potCents <= 0 || total <= 0) return out;
+  let given = 0;
+  for (const k of ids) { out[k] = Math.floor((potCents * scores[k]) / total); given += out[k]; }
+  const top = ids.reduce((a, k) => (scores[k] > scores[a] ? k : a), ids[0]);
+  out[top] += potCents - given;
+  return out;
+}
+
+/**
  * Apply a payment to a bill as the optimistic lock would: returns { applied, changeCents, excessCents }.
  * Cash may overpay (change given). Other methods are capped at what is due; the excess is reported for refund.
  */
