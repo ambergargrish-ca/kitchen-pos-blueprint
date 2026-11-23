@@ -2,7 +2,7 @@
 
 A Claude skill for building a production-grade restaurant POS (tabs, kitchen display, online and QR ordering, payments, card terminals, offline mode, back office) as one multi-tenant codebase, and then replicating it to salons, clinics, dental offices, gyms and shops by configuration instead of forks.
 
-The core of the skill is an **edge-case catalog of 234 cases** across 23 areas, each with what goes wrong and the rule that prevents it, plus a CSV matrix and a gate script so no P0 case ships without a passing test.
+The core of the skill is an **edge-case catalog of 273 cases** across 23 areas, each with what goes wrong and the rule that prevents it, plus a CSV matrix and a gate script so no P0 case ships without a passing test.
 
 Built and proven on the Mainpoint platform: one codebase running restaurant POS brands in two countries (Platepoint in Canada, Orbyt in New Zealand) and products for salons, clinics, dental offices, gyms and stores.
 
@@ -36,7 +36,7 @@ kitchen-pos-blueprint/
 │   ├── 09-replicate.md
 │   ├── 10-regions-tax.md
 │   ├── 11-testing-launch.md
-│   └── edge-cases.md              234 cases, P0 / P1 / P2
+│   └── edge-cases.md              273 cases, P0 / P1 / P2
 ├── scripts/
 │   ├── money.js                   reference money core (pure functions)
 │   ├── money.test.mjs             node --test scripts/money.test.mjs

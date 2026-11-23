@@ -11,7 +11,7 @@ abstract: >-
   A Claude skill for building a production-grade, multi-tenant restaurant POS (tabs,
   kitchen display, online and QR ordering, payments, card terminals, offline mode,
   back office) and replicating it to salons, clinics, gyms and shops by configuration.
-  Includes a 234-case edge-case catalog with a CI gate, a reference money core with
+  Includes a 273-case edge-case catalog with a CI gate, a reference money core with
   tests, a starter schema and region tax notes for New Zealand and Canada. Built and
   proven on the Mainpoint platform (Platepoint, Orbyt).
 keywords:
@@ -23,5 +23,5 @@ keywords:
   - payments
   - edge-cases
 license: MIT
-version: 1.0.0
+version: 1.0.1
 date-released: "2026-11-22"

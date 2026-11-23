@@ -15,7 +15,15 @@ Every channel creates the same order through the same pricing function and ends 
 
 ## Online ordering essentials
 
-Photos, dietary tags, allergens, spice, portion and deal lines; options; pickup, delivery or dine in; promo codes; open/closed state; sold-out items hidden; live tracking by random token; retry payment; tips (optional); order ahead up to 7 days; guest accounts by texted code; reorder; saved addresses; favourites; referrals; reviews and problem reports; "Powered by <platform>" in the footer of a branded site.
+Photos, dietary tags, allergens, spice, portion and deal lines; options; pickup, delivery or dine in; promo codes; open/closed state; sold-out items hidden; live tracking by random token; retry payment; tips (optional); order ahead for a few days (inside the card hold window when holding cards, PAY-14); guest self-cancel by a written policy (REF-09); out-of-stock swap or refund (REF-10); guest accounts by texted code; reorder; saved addresses; favourites; referrals; reviews and problem reports; "Powered by <platform>" in the footer of a branded site.
+
+## Fake orders and no-shows
+
+A block list for phones and emails (ORD-17), card-testing and gift card limits (ORD-18), a staff check before cooking for big first orders and bursts (ORD-19), pay at the counter by phone only for guests with a good history (ORD-20), and reminders then "not collected" for pickups (ORD-21). Card disputes are handled from the order record (PAY-15).
+
+## Delivery with couriers
+
+No drivers on the team means couriers do every delivery; offer delivery at checkout only when a courier can take that address now; alert, retry and give the guest choices when a courier does not show (DLV-10). Price the courier fee from the live quote (DLV-11) and pass tips to the courier in full (DLV-12).
 
 ## Phone AI agent
 

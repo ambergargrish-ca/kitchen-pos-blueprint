@@ -64,6 +64,14 @@ SELECT ?, ?, ?, 'refund', p.method, ?, p.id FROM payments p
 
 Then call the provider. If the provider call fails, mark the refund row failed and show it; never delete it silently.
 
+## Sharing amounts across lines
+
+Three helpers in `scripts/money.js` keep shares summing exactly:
+
+- `allocate(amount, lineValues)`: a discount over chosen dishes or a seat, by value; the last line takes the remainder; no share above its line (POS-26).
+- `lineRefundCents(lineNet, allNet, charged, tip, paid)`: one dish's share of what was actually charged, tip left out, capped at what was paid (REF-10).
+- `splitTips(pot, scores)`: tip pools by hours or weighted hours in whole cents, leftover cents to the highest score (STF-09).
+
 ## Daily journal (accounting export)
 
 One balanced journal per business day.

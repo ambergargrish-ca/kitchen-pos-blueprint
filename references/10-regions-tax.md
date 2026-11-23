@@ -4,7 +4,7 @@ A region sets: brand name (optional), currency, tax model, default rates, time z
 
 ## New Zealand (case study)
 
-NZD, 15% GST included in prices (tax = total x 15/115), Pacific/Auckland, Stripe or Windcave, gift cards valid at least 3 years, NZ Privacy Act 2020, Unsolicited Electronic Messages Act, no statutory weekly overtime threshold.
+NZD, 15% GST included in prices (tax = total x 15/115), Pacific/Auckland, Stripe or Windcave, gift cards valid at least 3 years, NZ Privacy Act 2020, Unsolicited Electronic Messages Act, no statutory weekly overtime threshold. Card surcharges: a bill to ban them on in-person payments had not passed as of 21 November 2026; keep the switch per region (REG-06) and check with a lawyer.
 
 ## Canada (case study)
 

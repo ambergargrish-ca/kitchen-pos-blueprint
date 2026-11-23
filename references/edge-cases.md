@@ -65,6 +65,16 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **POS-20 (P1) Business day past midnight.** A bar closes at 2am; the Z report splits the night across two days. **Rule:** a business-day cutoff per branch (for example 5am); sales belong to the day the shift started.
 - **POS-21 (P1) Z report run twice or mid-shift.** **Rule:** a Z report is a read of closed data for a business day; X reports are mid-shift; both reproducible.
 - **POS-22 (P2) Handheld screens.** Long menus on a phone. **Rule:** two-column buttons and a fixed bottom bar with total, Send, Bill, Pay.
+- **POS-23 (P0) Manager approval on a server's tablet.** A server needs a manager for a void or comp, and the manager signs in on the server's tablet and forgets to sign out. **Rule:** the manager types a PIN that authorises that one request only; allowed only for POS and order actions (voids, comps, discounts, refunds), never settings, people or payment setup; wrong PINs rate limited; the audit row names both the server and the manager.
+- **POS-24 (P1) Courses fired too early or never.** Mains reach the kitchen with the starters, or a held course is forgotten when the table pays. **Rule:** later courses stay off the kitchen screen until the server fires them, each fired course is its own ticket, and paying the bill sends anything still held.
+- **POS-25 (P1) Moving or merging dishes between tabs.** Dishes move but their tickets stay behind, or a dish moves off a bill someone already paid part of. **Rule:** moved dishes keep their kitchen ticket; a merge moves every dish and ticket and closes the old tab; refuse a move when either bill has a payment on it; handing a tab to another server is limited to managers or the server who has it.
+- **POS-26 (P1) Discounts on single dishes or one seat.** A fixed amount off three dishes is split unevenly or leaves a cent over. **Rule:** share the amount by line value, round each share, let the last line take the remainder, never more than a line's own value, and take it off before tax like a bill discount, with a reason and a manager.
+- **POS-27 (P1) A split payment that forgets what it paid for.** Seat 2 pays, then the bill is re-split and seat 2 is asked again. **Rule:** every payment records what it covered (a seat, one of N even shares, or a list of dishes); take cash first and send only the remainder to the card terminal.
+- **POS-28 (P1) Reopening a paid tab.** A forgotten dessert after the bill closed. **Rule:** a manager may reopen a paid tab within a set window (for example 24 hours); logged with who and why; the reopened tab takes new dishes and a new payment, never edits the old one.
+- **POS-29 (P1) Charging an amount without items.** A business keeping its own POS wants to use your terminal for a check total. **Rule:** an amount-only charge with a reference (their check number) records the payment only: no tax added (it was worked out on their POS), never a kitchen ticket, a receipt on approval.
+- **POS-30 (P1) Guest-facing screens show too much.** The customer display or a pickup board leaks staff names, kitchen notes or guest names. **Rule:** the customer display shows dishes, discounts, tax, total and status only; a public "now serving" board shows order numbers only (no names) and leaves table orders off.
+- **POS-31 (P0) House account limit passed by two tablets.** **Rule:** charge to an account with the limit check and the balance change in one SQL statement, a ledger row per change (charge, payment, refund, adjustment), a manager to go over the limit, and statements built from the ledger with opening and closing balances.
+- **POS-32 (P1) Catering orders cooked at the wrong time.** **Rule:** minimum notice and a furthest date ahead; the quote is sent with a deposit link and the deposit lands on the catering bill once paid; the kitchen gets the order a set number of hours before the event, not when it is booked.
 
 ## 3. Offline mode (OFF)
 
@@ -93,13 +103,14 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **KDS-10 (P1) All-day counts.** **Rule:** count only unbumped, unvoided lines.
 - **KDS-11 (P1) Unpaid online orders reaching the kitchen.** **Rule:** online orders go to the kitchen only after payment is confirmed; pay-at-counter orders go straight away by design and are marked.
 - **KDS-12 (P1) Delivery app cancels after cooking started.** **Rule:** show a cancel ticket loudly; do not delete the original.
+- **KDS-13 (P2) Ready-time estimates that ignore the room.** A fixed "20 minutes" on a slammed night. **Rule:** record each ticket's queue size and cook time, fit minutes-to-ready from recent history blended with sensible starting values until there is enough data, drop outliers (tickets left on screen overnight), and show how far off the estimate usually is.
 
 ## 5. Online ordering and guests (ORD)
 
 - **ORD-01 (P0) Ordering while closed.** **Rule:** check opening hours on the server, in the branch's time zone, at order time and at payment time.
 - **ORD-02 (P0) Hours past midnight.** "Friday 17:00 to 02:00" stored as 1020 to 1560 minutes. **Rule:** close may exceed 1440; Saturday 1am belongs to Friday's opening.
 - **ORD-03 (P1) DST change.** A 2:30am slot that does not exist, or happens twice. **Rule:** convert local wall time to UTC with two passes; test both DST transitions.
-- **ORD-04 (P1) Order-ahead limits.** **Rule:** later today or up to 7 days out, only inside opening hours, only in slots that exist.
+- **ORD-04 (P1) Order-ahead limits.** **Rule:** later today or a few days out, only inside opening hours, only in slots that exist; when the card is held rather than charged (PAY-14), stop before the provider's hold expires (the case study allows 6 days against an online hold of about 7).
 - **ORD-05 (P0) Abandoned checkout.** Order sits at "pending payment" forever, holding points or gift card money. **Rule:** a clean-up job cancels unpaid online orders after 45 minutes and returns held points and gift card balances.
 - **ORD-06 (P0) Payment arrives after the order was cancelled.** **Rule:** the late webhook marks it paid-but-cancelled and raises a refund task; never silently drop money.
 - **ORD-07 (P1) Retry payment.** Card declined. **Rule:** the same order can start a new checkout; old sessions are invalidated.
@@ -112,6 +123,11 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **ORD-14 (P1) Receipts.** **Rule:** tokenised receipt link; tax shown on its own line with the tax number; 80mm print layout.
 - **ORD-15 (P1) Reviews and problem reports.** A guest claims "missing item" a week later. **Rule:** problem reports for 48 hours, refund request capped at the order, manager resolves.
 - **ORD-16 (P2) Allergens and spice.** Junk values from the editor. **Rule:** allowed allergen list only, deduplicated; spice clamped 0 to 3.
+- **ORD-17 (P0) Blocked guests still ordering.** A known abuser orders again with the same number in a new format. **Rule:** a per-business block list of normalised phones and emails checked on orders, bookings and gift card sales; the message is neutral ("please call the restaurant"), never "you are blocked".
+- **ORD-18 (P0) Card testing through checkout.** Someone runs stolen cards through many small unpaid checkouts, or turns them into gift cards. **Rule:** refuse new checkouts from a number with too many unpaid ones in a short window; cap gift card spend per buyer per day; both limits editable per business.
+- **ORD-19 (P1) Fake big orders.** A large first order or a burst of orders from one number is cooked and never collected. **Rule:** hold such orders for a staff check before any ticket is created, alert the location, and release with a conditional update (only while still held) so it cannot be sent twice; regulars who have collected before are never held for ordering again; demo businesses get relaxed limits.
+- **ORD-20 (P1) Pay at the counter by phone abused.** **Rule:** offer it only to numbers that have collected an order before, below a limit, and never after a no-show; everyone else gets a card link by text, and the order notes why.
+- **ORD-21 (P1) Pickups nobody collects.** **Rule:** one reminder a set time after the order is ready (claimed once), then close it as not collected after a few hours; paid orders are not refunded; remember the number for ORD-20. Applies to web and phone orders, not POS tabs.
 
 ## 6. QR table ordering (QR)
 
@@ -129,10 +145,10 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 ## 7. Payments (PAY)
 
 - **PAY-01 (P0) Trusting the redirect.** "success_url" reached means nothing. **Rule:** mark paid only from a signed webhook or a server-side read of the payment; check amount, currency and that the transaction has not been used before.
-- **PAY-02 (P0) Webhook replay.** **Rule:** store every event id (`webhook_events`) and process once; reject events whose live/test mode does not match the deployment.
+- **PAY-02 (P0) Webhook replay.** **Rule:** store every event id (`webhook_events`) and process once; reject events whose live/test mode does not match the deployment. Storing the id must not block a retry when the work failed (PAY-13).
 - **PAY-03 (P0) Unsigned or forged webhook.** **Rule:** verify the signature on the raw body with constant-time compare; reject missing signatures; staging bypasses only with a flag that dies in live mode.
 - **PAY-04 (P0) Amount mismatch.** Provider says $10, order is $40. **Rule:** do not mark paid; flag the order for a human.
-- **PAY-05 (P0) Test keys in production, live keys in dev.** **Rule:** refuse live keys unless `LIVE_PAYMENTS=1`; refuse test keys when it is on.
+- **PAY-05 (P0) Test keys in production, live keys in dev.** **Rule:** refuse live keys unless `LIVE_PAYMENTS=1`; refuse test keys when it is on. Treat restricted keys the same as secret keys of their mode (PAY-16).
 - **PAY-06 (P0) Mocks in production.** A fake terminal that approves everything. **Rule:** every mock switch and dev route stops working in live mode, checked at runtime.
 - **PAY-07 (P0) Test money spent live.** Gift cards bought with test money. **Rule:** mark them and refuse them once live.
 - **PAY-08 (P1) Provider outage.** Checkout cannot start. **Rule:** cancel the just-created order cleanly and tell the guest; never leave a pending order with no session.
@@ -140,6 +156,12 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **PAY-10 (P1) Negative balances.** Refunds after payout push a connected account negative. **Rule:** decide who carries the loss (a managed-risk option from the processor, or a reserve) before launch.
 - **PAY-11 (P0) Card data in your system.** **Rule:** hosted checkout and terminals only; card numbers never reach your server or logs.
 - **PAY-12 (P1) Partial capture or tip adjust.** **Rule:** record the final captured amount from the provider, not the requested one.
+- **PAY-13 (P0) Webhook marked as seen before the work succeeded.** The event id is stored, marking the order paid fails, and the provider's retry is ignored as a duplicate: a paid order never reaches the kitchen. **Rule:** record the event and do the work as one unit, or forget the event id when the work fails and answer with an error so the provider retries; only a final (paid) result may block later notifications for the same payment.
+- **PAY-14 (P0) Card hold on an order-ahead.** Charging at checkout means refund fees for every cancellation; holding the card too long means the hold expires. **Rule:** authorise at checkout and capture when the order is released to the kitchen; keep order-ahead inside the provider's hold window; accept the checkout only once the provider confirms the hold for the full amount; a refused or expired capture cancels the order before cooking and tells the guest, a temporary error retries; cancelling before release voids the hold; a partial refund before release captures less.
+- **PAY-15 (P0) Card disputes noticed too late.** **Rule:** handle dispute events, match them to the order and check the event's connected account owns it, record the status, alert the business once, and build evidence from the order's own record (items, times, how it was handed over, proof of delivery, not collected) to submit before the due date; never resubmit once the provider has it under review.
+- **PAY-16 (P1) Restricted keys refused.** A live-mode check that only accepts secret keys rejects a restricted key of the same mode. **Rule:** key-prefix checks accept both secret and restricted keys, and still refuse any key of the wrong mode.
+- **PAY-17 (P0) Connected account created wrong.** Accounts created with the platform's home country for businesses in another, or two accounts from a double click. **Rule:** create the connected account with the business's own country and currency, and send an idempotency key with the create call.
+- **PAY-18 (P1) Refund asks for money that was never taken.** The provider refuses a refund that asks for the platform fee back on a charge that had none, or a transfer reversal on a charge that was not a destination charge. **Rule:** ask for the fee back only when the charge carried one and reverse a transfer only for destination charges; expect the fee to come back in proportion to the amount refunded.
 
 ## 8. Refunds (REF)
 
@@ -151,6 +173,8 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **REF-06 (P1) Parallel refunds and the order total.** **Rule:** add to the order's refunded total in SQL, not from a copy read earlier.
 - **REF-07 (P1) Insurance payments.** **Rule:** not refundable from the bill; reversed through the claim instead.
 - **REF-08 (P1) Refunds after the day closed.** **Rule:** refunds belong to the day they happen; journals move negatives to the other side.
+- **REF-09 (P0) Guests cancelling their own order.** **Rule:** write the policy down by state: scheduled and not yet sent to the kitchen, full refund (or the card hold released); already with the kitchen, cancelled without a refund; cooking started, not cancellable online; never paid, simply cancelled. Change the status first with a conditional update so two taps cannot refund twice, then refund, return points and gift card value, and rate limit the endpoint.
+- **REF-10 (P1) A dish on a paid online order is out of stock.** The kitchen is stuck waiting for the guest. **Rule:** the kitchen marks the dish, the guest picks a swap (same price or less, difference refunded), a refund for that dish, or a full cancel; no answer within a few minutes refunds the dish and the rest carries on. The dish's refund is its share of what was charged (tip left out, capped at what was paid), refunded across the order's payments newest first, each through its own provider.
 
 ## 9. Card terminals (TRM)
 
@@ -161,6 +185,8 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **TRM-05 (P1) Tip on the terminal.** **Rule:** record the tip returned by the terminal separately from the bill.
 - **TRM-06 (P1) Connection lost after approval.** **Rule:** status check on reconnect; never ask the guest to pay again until the first result is known.
 - **TRM-07 (P1) Reader belongs to the business's own processor account.** **Rule:** every terminal call carries the connected account id.
+- **TRM-08 (P1) Terminals that answer "sent", not "paid".** Some terminal APIs accept the request and the payment appears later as a transaction; a declined or cancelled payment leaves nothing, and there may be no cancel call. **Rule:** tag each payment with your own invoice number and poll for a transaction carrying it; keep waiting until staff cancel; respect the provider's idempotency key format; show device asleep or unknown messages plainly.
+- **TRM-09 (P1) Amounts keyed into a separate card machine.** **Rule:** an owner setting for card payments only through connected terminals; recording a payment keyed elsewhere then needs a manager; payments taken while offline are still recorded on replay.
 
 ## 10. Gift cards and loyalty (GL)
 
@@ -183,6 +209,7 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **BKG-04 (P0) Deposit used twice.** **Rule:** taken off the bill once at the POS; marked used.
 - **BKG-05 (P1) Reminder sent twice.** **Rule:** a sent-at column; send once.
 - **BKG-06 (P1) Waitlist position.** **Rule:** live position from the server; "table ready" text; seat or mark left.
+- **BKG-07 (P2) Wait quotes that promise a booked table.** **Rule:** quote walk-ins by playing the floor forward: tables free up when their party should finish (learned stay by party size), today's bookings hold a table from shortly before their time, parties already waiting go first; save each quote and compare it with the real wait to correct future quotes.
 
 ## 12. Delivery and dispatch (DLV)
 
@@ -195,6 +222,9 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **DLV-07 (P1) No geocoder key.** **Rule:** fall back to the guest's pin or the zone centre.
 - **DLV-08 (P0) Courier webhook replay.** **Rule:** claim once, like payments.
 - **DLV-09 (P1) Guest phone on dispatch screen.** **Rule:** hidden; call through masked links only.
+- **DLV-10 (P0) Delivery sold with nobody to deliver it.** **Rule:** a location with no drivers sends every delivery to a courier; checkout offers delivery only if a courier quote for that address succeeds right now; no courier booked within a few minutes, or a courier cancels or returns the food, alerts the business, tries the other courier, and texts the guest their choices (keep waiting, switch to pickup with the delivery fee back, or a refund).
+- **DLV-11 (P1) Courier delivery fee shown is not the fee charged.** **Rule:** the guest pays the live courier quote minus what the business covers, capped, free over a set order value, rounded up to a tidy amount; refresh the quote as the address is typed and charge the fee that was shown.
+- **DLV-12 (P1) Courier tips.** **Rule:** pass the guest's delivery tip to the courier driver in full (some couriers require it); set the tip when booking, since some couriers allow raising it later but never lowering it; keep courier tips out of the in-house pool.
 
 ## 13. Delivery apps and other POS systems (INT)
 
@@ -228,6 +258,7 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **MSG-05 (P0) Platform number abused by a new signup.** **Rule:** platform sender used only for approved businesses (not trials in review, not demos); daily ceiling per business, hourly per number.
 - **MSG-06 (P1) Codes in logs.** **Rule:** redact one-time and gift codes in the text log once sent.
 - **MSG-07 (P1) No provider keys yet.** **Rule:** texts and emails go to an outbox log so flows can be tested.
+- **MSG-08 (P1) Automatic texts sent twice or without consent.** Win-back, birthday, thank-you and reward texts run on a timer. **Rule:** the same consent, STOP and quiet-hour rules as campaigns; each kind at most once per guest per window; claim the send in the database before texting so two timer runs never text the same guest.
 
 ## 16. Inventory and purchasing (INV)
 
@@ -247,8 +278,9 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **STF-04 (P1) Overnight shifts.** **Rule:** shifts can cross midnight; hours belong to the start day.
 - **STF-05 (P1) Double-booked staff.** **Rule:** no overlapping shifts per person; copy last week skips clashes.
 - **STF-06 (P1) Overtime rules differ.** Ontario ESA 44 hours a week; NZ has no statutory weekly overtime threshold. **Rule:** per-business threshold with a regional default; overtime at 1.5x.
-- **STF-07 (P1) Tip pooling.** **Rule:** card tips pooled by hours worked; driver tips excluded.
+- **STF-07 (P1) Tip pooling.** **Rule:** card tips pooled by hours worked; driver tips excluded. Other tip rules in STF-09.
 - **STF-08 (P1) Schedule changes.** **Rule:** publishing texts each person their week; deleting a published shift texts them too.
+- **STF-09 (P1) Tip rules other than a plain pool.** **Rule:** support pooling by hours with a weight per role, servers keeping their own, and keeping their own minus a tip-out to other roles; split in whole cents with the leftover cents going to whoever worked longest, so shares always add up to the pot.
 
 ## 18. Back office, reports and accounting (BOF)
 
@@ -271,6 +303,10 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **TEN-06 (P1) Billing re-run.** **Rule:** invoices safe to re-run (unique per tenant and month); pro rata after a trial or a mid-month start; usage (minutes, texts) added; commission only when not already taken at checkout.
 - **TEN-07 (P0) Support access.** **Rule:** "open as owner" needs a written reason, lasts an hour, shows a banner to the business, logged in both audit logs.
 - **TEN-08 (P1) Demo tenant abuse.** **Rule:** demo data resets; no real texts, emails or payments from demos.
+- **TEN-09 (P0) Self-serve custom domains.** An owner claims a host that belongs to the platform, or a domain goes live before its certificate. **Rule:** the business buys and keeps the domain; add it as a custom hostname, route it only once both the DNS record and the certificate are active, refuse platform and provider hosts, turn a bare root into www (most registrars cannot put a CNAME on the root) and tell the owner to forward the root, do not reveal whether another platform already holds the host, one domain per business, and check with back-off plus a "check now" button.
+- **TEN-10 (P1) Commission collected twice or never.** Checkout takes no platform fee because the plan bills it monthly, while the invoice skips it because "checkout took it". **Rule:** one function decides per plan where commission is collected (at checkout or on the invoice), and both sides ask it.
+- **TEN-11 (P1) Bank debit for platform invoices.** **Rule:** bank debit (for example Canadian pre-authorised debit) suits fixed subscription invoices, never guest orders, because it takes days to clear; keep it off until the payment method is enabled in the provider's dashboard, or invoice creation fails.
+- **TEN-12 (P1) Query parameter limits.** A busy day's "IN (...)" list passes the database's bound-parameter limit (100 on Cloudflare D1) and the screen fails at peak. **Rule:** chunk lists of ids into batches below the limit.
 
 ## 20. Replicating to other verticals (VRT)
 
@@ -294,6 +330,7 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **REG-03 (P1) Region wording.** NZ English vs Canadian English, "EFTPOS" vs "debit". **Rule:** region rewrite with protected tokens (tax names, header names) set aside and restored.
 - **REG-04 (P1) Policies per country.** **Rule:** a privacy policy per region (NZ Privacy Act 2020, PIPEDA and CASL in Canada), checked by a local lawyer.
 - **REG-05 (P1) Platform invoice tax.** **Rule:** your own subscription invoices carry the right tax for the customer's province or country.
+- **REG-06 (P1) Surcharge law changes by region and date.** New Zealand has a bill to ban surcharges on in-person card payments; it had not passed as of 21 November 2026. **Rule:** the surcharge is a per-region switch with an effective date, in-person and online handled separately, so it can be turned off on the day a law commences; check the current law with a lawyer.
 
 ## 22. Security and web (SEC)
 
@@ -312,3 +349,5 @@ Copy the ids into `templates/edge-case-matrix.csv` and link each to its test.
 - **DEV-03 (P1) Stale cached code after deploy.** **Rule:** fingerprint assets and version the service worker.
 - **DEV-04 (P2) Native wrappers.** **Rule:** the same web app inside Capacitor (staff, driver, branded ordering) so there is one code path.
 - **DEV-05 (P1) Printers.** Printer offline or out of paper. **Rule:** the kitchen screen is the source of truth; printing is a copy with a reprint button.
+- **DEV-06 (P1) Cloud printer loses a job mid-print.** **Rule:** the printer polls for work; a job sent but not confirmed goes back in the queue after about a minute, so a printer that lost power reprints instead of dropping the ticket; route kitchen tickets by station and print VOID slips.
+- **DEV-07 (P1) Cash drawer opens at the wrong time.** **Rule:** open it on a cash payment (not when a payment taken offline is replayed later); drawer jobs jump the print queue, are never sent twice, and are dropped if the printer only comes back minutes later; an "open till" button logs who opened it and why as a no-sale, shown on the Z report.
