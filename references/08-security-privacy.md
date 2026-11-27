@@ -45,3 +45,17 @@ The five holes that sink quickly built apps. Each one is a check in the test sui
 3. **Login checked only in the browser.** One server-side gate before every signed-in route returns 401 without a valid session; the only routes above it are sign-in flows (login, PIN, forgot, reset). Hiding a page in the front end is not a check.
 4. **Secret keys in the front end.** Nothing the browser downloads holds a secret key (Stripe `sk_`, webhook `whsec_`, cloud keys, model API keys). Scan every shipped file for key patterns; keep secrets in the platform secret store, never in config files committed to the repo.
 5. **No rate limit on paid endpoints.** Every route that calls a model, sends a text or places a call has a per-tenant (or per-IP) limit plus a monthly spend cap, so one bot cannot run up the bill overnight. The test lists every AI route and fails when one has no limit.
+
+## API mistakes to rule out (the other ten)
+
+Beyond the ship-safe five, check each of these before go-live:
+- **Trusting the front end.** Hiding the admin button is not security. Every route checks who the user is and what their role allows (`requireRole`), whatever the screen shows.
+- **Broken access control.** Check three things on every request: who is asking, which action, on which record. Watch fields as well as routes: a manager must not be able to set `role = owner`, and nobody can change prices or totals through an order call.
+- **Business logic abuse.** Validate the whole journey, not each call: points only after an order is paid (once, guarded by a flag), rewards only after the step they reward, a refund only up to what was paid.
+- **Trusting external APIs.** Verify every webhook (signature or HMAC, or a shared secret with a constant-time compare) and drop duplicates by event id. Re-read the payment status from the provider before marking an order paid.
+- **SSRF.** The server never fetches a URL the user typed. Outbound calls go to fixed provider hosts only; if a feature needs a user URL (import a menu from a link), allow-list the hosts and block private ranges.
+- **Sensitive data.** Mask phone numbers and card details in lists; return only the fields a screen needs.
+- **Input validation.** Clean and cap every field on the server (length, type, range, enum).
+- **Rate limiting.** See the ship-safe five.
+- **API inventory.** Know every live route; retire old ones, and keep dev and demo routes off in production.
+- **Configuration.** HSTS, a strict Content-Security-Policy, `frame-ancestors 'none'`, `nosniff`, a tight Permissions-Policy, and CORS `*` only on public routes that carry no cookies.
