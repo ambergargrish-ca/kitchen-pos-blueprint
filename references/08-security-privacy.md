@@ -36,3 +36,12 @@ Voids, discounts, comps, refunds, price and settings changes, staff edits, times
 ## Before real money
 
 Independent penetration test, live keys swapped deliberately, mocks and dev routes off, WAF rate limits on sign-in and order routes, provider certifications, backups with a tested restore. Full list: `templates/go-live-checklist.md`.
+
+## Ship-safe five (keep them closed by test)
+
+The five holes that sink quickly built apps. Each one is a check in the test suite, so a later change cannot quietly reopen it (Mainpoint: `test/shipsafe.test.js`).
+1. **Open data.** Every query on a business's data filters by `tenant_id` (or Row Level Security is on for every table, if the database offers it). A guest or staff member only ever sees their own business's rows.
+2. **Public file storage.** No public buckets. Uploaded photos and ID documents stay private; hand out signed links that expire (about 60 seconds) or serve them through an authenticated route.
+3. **Login checked only in the browser.** One server-side gate before every signed-in route returns 401 without a valid session; the only routes above it are sign-in flows (login, PIN, forgot, reset). Hiding a page in the front end is not a check.
+4. **Secret keys in the front end.** Nothing the browser downloads holds a secret key (Stripe `sk_`, webhook `whsec_`, cloud keys, model API keys). Scan every shipped file for key patterns; keep secrets in the platform secret store, never in config files committed to the repo.
+5. **No rate limit on paid endpoints.** Every route that calls a model, sends a text or places a call has a per-tenant (or per-IP) limit plus a monthly spend cap, so one bot cannot run up the bill overnight. The test lists every AI route and fails when one has no limit.
