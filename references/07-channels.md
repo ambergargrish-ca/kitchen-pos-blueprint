@@ -31,3 +31,17 @@ One aggregator integration covers many apps. Reply within the time limit, verify
 ## Keep their POS
 
 For businesses that buy only a module (for example the AI phone agent): import their menu (update by external id, no duplicates), push every order into their POS with tax as charged and online payments recorded as external payments, queue with back-off, show status and a retry button, encrypt their tokens at rest. Offer a signed generic webhook and a scoped API for any other system.
+
+## Booking marketplace and bookings-only plans
+
+Sell bookings on their own as a module, and list every restaurant with bookings on in one booking marketplace.
+
+- **Tag the source on every booking** (own website, phone, AI phone, staff, marketplace, Google). Charge per booking only for the ones the platform sent (marketplace, Reserve with Google), only on pick-and-choose plans at list price, and never for cancelled or no-show bookings. The restaurant's own channels stay free. Show the source in the staff Bookings list.
+- **Bookings-only setup:** sign-up with only the bookings module on, a short go-live checklist (address and phone, hours, seats) that works without the website module, and a guest booking page the owner can link from their own site and Google profile.
+- **Marketplace search on a phone:** one search pill opens a full-screen sheet that asks where, when and who one at a time, folds answered steps to one line, shows recent searches and "Near me" before typing, and puts the live count on the button ("Show 3 restaurants"). Free times near the wanted time appear as buttons on each card; deposits apply as on the restaurant's own page.
+
+## Owner assistant ("ask your business anything")
+
+- **Tools, not guesses.** The assistant answers only from tool calls that read the tenant's own data (sales, bookings, labour, stock, reviews, agent findings) and proposes actions as cards the owner presses. It never sends or changes anything on its own except what the owner put on autopilot.
+- **Show the work.** Stream each step as it happens in plain words ("Looking at your sales", "Asking your marketing agent") with a spinner then a tick, then reveal the answer paragraph by paragraph and fold the steps into "Worked through N steps". A newline-delimited JSON stream from the server is enough; keep a non-streaming response for tests and old clients.
+- **Cap the spend.** A monthly AI budget per platform and a rate limit per tenant, checked before every call.
