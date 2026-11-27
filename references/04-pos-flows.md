@@ -50,3 +50,17 @@ One hub per tenant. Any change (paid order, bump, payment, booking, call for sta
 ## Close of day
 
 Z report per branch, cash count vs expected, open tabs list, empty tabs to cancel, unsent lines warning, offline queue warning per device.
+
+## Screen behaviour on a busy shift
+
+Staff tap fast, with wet hands, on a slow kitchen Wi-Fi. The money core protects the data; these keep the screens honest. (Same list, for websites: no-slop-web `references/interaction-details.md`.)
+
+- **One tap, one action.** Pay, Send, Fire, Refund and Close tab lock the moment they are tapped and show they are working, then unlock on failure with the reason. The server is idempotent anyway (rule 4); the lock stops the second tap reaching it.
+- **Targets sized for thumbs.** POS and kitchen buttons at least 44 by 44 pixels (bigger for bump and pay), with space between Remove and Add. Small icons get a larger invisible hit area, not a larger icon.
+- **No theme flash.** Kitchen screens run dark; set the theme before first paint so a reload at 9pm doesn't flash white.
+- **Reserve space.** Menu photos, the order rail and live-updating totals keep a fixed size so a tile doesn't jump under a finger as data loads.
+- **Enter does the obvious thing.** PIN pads, search and payment amount fields submit on Enter (real forms), so a keyboard or barcode scanner works.
+- **Validate when the field is left.** Phone numbers, emails and gift card codes check on blur and on submit, not on every keystroke.
+- **Every state is a screen.** Loading has a time limit; offline says "Offline, 3 changes waiting" (never an endless spinner); a failed payment says what to do next; typed input is never lost.
+- **Toasts that wait.** "Order sent" and "Undo void" pause while touched or hovered; errors stay until dismissed; announced with role="status" or "alert".
+- **Share previews.** Guest-facing pages (menu, order tracking, bookings) carry a designed Open Graph image so the link looks right when a guest shares it.
