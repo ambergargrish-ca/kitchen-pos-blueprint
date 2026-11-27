@@ -46,6 +46,15 @@ The five holes that sink quickly built apps. Each one is a check in the test sui
 4. **Secret keys in the front end.** Nothing the browser downloads holds a secret key (Stripe `sk_`, webhook `whsec_`, cloud keys, model API keys). Scan every shipped file for key patterns; keep secrets in the platform secret store, never in config files committed to the repo.
 5. **No rate limit on paid endpoints.** Every route that calls a model, sends a text or places a call has a per-tenant (or per-IP) limit plus a monthly spend cap, so one bot cannot run up the bill overnight. The test lists every AI route and fails when one has no limit.
 
+## Five doors anyone can try from a browser
+
+Probe the live address for each; every one should be a 404 or a sealed cookie:
+- `/.env` (or `.dev.vars`): serve only a dedicated public folder, so config and secrets files are never in it.
+- Source maps (`*.js.map`): don't ship them, or the whole source reads like you wrote it for the visitor.
+- `/.git/config`: the repo must never be inside the served folder (the full history, secrets included, downloads from it).
+- Open tables: covered by ship-safe 1.
+- Login cookie: `HttpOnly` (no script can read it), `Secure`, `SameSite=Strict` (Lax for guest sign-in that arrives from links).
+
 ## API mistakes to rule out (the other ten)
 
 Beyond the ship-safe five, check each of these before go-live:
