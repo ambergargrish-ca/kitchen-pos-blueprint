@@ -42,7 +42,7 @@ Start from `templates/schema.sql`. Core tables: tenants, branches, staff_users, 
 Pricing, totals, tax (inclusive and exclusive), discounts, surcharges, tips, split bills, refunds and the daily journal. Pure functions, unit tested, before any screen exists. `scripts/money.js` is a reference implementation with `scripts/money.test.mjs`. Read `references/03-money.md`.
 
 ### 4. POS and kitchen
-Floor plan, tabs, rounds, seats, voids, moves, split payments, then the kitchen display with stations, bump, recall and timers. Read `references/04-pos-flows.md` and `references/05-kitchen-display.md`.
+Floor plan, tabs, rounds, seats, voids, moves, split payments, then the kitchen display with stations, bump, recall and timers. Buttons lock on tap, targets are 44px or more, kitchen screens never flash the wrong theme, and offline or failed actions show a real state, never an endless spinner ("Screen behaviour on a busy shift"). Read `references/04-pos-flows.md` and `references/05-kitchen-display.md`.
 
 ### 5. Channels
 Online ordering, QR table ordering (order now or pay at the end), kiosk, phone AI agent, delivery apps, and pushing orders into a POS the business already has. Every channel ends in the same order and ticket model. Read `references/07-channels.md`.
