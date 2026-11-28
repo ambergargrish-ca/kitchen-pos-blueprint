@@ -45,3 +45,13 @@ Sell bookings on their own as a module, and list every restaurant with bookings 
 - **Tools, not guesses.** The assistant answers only from tool calls that read the tenant's own data (sales, bookings, labour, stock, reviews, agent findings) and proposes actions as cards the owner presses. It never sends or changes anything on its own except what the owner put on autopilot.
 - **Show the work.** Stream each step as it happens in plain words ("Looking at your sales", "Asking your marketing agent") with a spinner then a tick, then reveal the answer paragraph by paragraph and fold the steps into "Worked through N steps". A newline-delimited JSON stream from the server is enough; keep a non-streaming response for tests and old clients.
 - **Cap the spend.** A monthly AI budget per platform and a rate limit per tenant, checked before every call.
+
+## Guest ordering details worth having (learned from the big delivery apps, built in our own style)
+
+- **The menu shows what you've picked.** A dish's add button turns into the number in the bag.
+- **Section chips follow the scroll** and stay sticky; a menu search appears on longer menus (8+ dishes).
+- **One calm "added" signal.** On phones the order bar bumps and updates its count and total; no stacked pop-ups over the bag or checkout.
+- **Closing soon.** In the last half hour the open badge counts down ("Closing soon, 20 min left to order").
+- **The bag.** The minus becomes a bin at one; an "Add more items" button goes back to the menu; "Goes well with your order" offers up to three dishes that really sell together (from the restaurant's own orders, never invented).
+- **Searched before.** The marketplace remembers the last few searches that found something, on the device only.
+- **Still to consider:** an order-again row and "ordered before" tags on the menu for signed-in guests, a cutlery opt-in, an order-level note, required/chosen ticks on option groups, and a tip screen that shows the dollar amount beside each percent.
